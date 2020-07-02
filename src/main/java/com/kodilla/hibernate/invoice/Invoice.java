@@ -7,9 +7,14 @@ import java.util.List;
 @Entity
 @Table(name="INVOICE")
 public class Invoice {
+    @Id
+    @Column(name = "ID", unique = true)
+    @GeneratedValue
+    @NotNull
     private int id;
+
+    @Column(name = "NUMBER")
     private String number;
-    private List<Item> items;
 
     @OneToMany(
             targetEntity = Item.class,
@@ -17,22 +22,8 @@ public class Invoice {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    public List<Item> getItems() {
-        return items;
-    }
+    private List<Item> items;
 
-    @Id
-    @Column(name = "ID", unique = true)
-    @GeneratedValue
-    @NotNull
-    public int getId() {
-        return id;
-    }
-
-    @Column(name = "NUMBER")
-    public String getNumber() {
-        return number;
-    }
 
     public Invoice(String number, List<Item> items) {
         this.number = number;
@@ -40,18 +31,15 @@ public class Invoice {
     }
 
     public Invoice() {
+
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
     }
 
     @Override

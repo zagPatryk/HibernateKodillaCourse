@@ -7,32 +7,32 @@ import java.math.BigDecimal;
 @Entity
 @Table(name="ITEM")
 public class Item {
+    @Id
+    @Column(name = "ID", unique = true)
+    @GeneratedValue
+    @NotNull
     private int id;
-    private Product product;
-    private BigDecimal price;
-    private int quantity;
-    private BigDecimal value;
-    private Invoice invoice;
 
     @ManyToOne(
             cascade = CascadeType.ALL
     )
     @JoinColumn(name = "ITEM_ID")
-    public Product getProduct() {
-        return product;
-    }
+    private Product product;
+
+    @Column(name = "PRICE")
+    private BigDecimal price;
+
+    @Column(name = "QUANTITY")
+    private int quantity;
+
+    @Column(name = "VALUE")
+    private BigDecimal value;
 
     @ManyToOne(
             cascade = CascadeType.ALL
     )
     @JoinColumn(name = "INVOICE_ID")
-    public Invoice getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
-    }
+    private Invoice invoice;
 
     public Item(Product product, BigDecimal price, int quantity, BigDecimal value) {
         this.product = product;
@@ -45,47 +45,16 @@ public class Item {
 
     }
 
-    @Id
-    @Column(name = "ID", unique = true)
-    @GeneratedValue
-    @NotNull
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    @Column(name = "PRICE")
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    @Column(name = "QUANTITY")
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    @Column(name = "VALUE")
-    public BigDecimal getValue() {
-        return value;
-    }
-
-    public void setValue(BigDecimal value) {
-        this.value = value;
     }
 
     @Override

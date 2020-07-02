@@ -9,9 +9,23 @@ import java.util.List;
 @Entity
 @Table(name="TASKLISTS")
 public final class TaskList {
+    @Id
+    @GeneratedValue
+    @Column(name="ID", nullable = false, unique = true)
     private int id;
+
+    @Column(name="LISTNAME", nullable = false, unique = true)
     private String listName;
+
+    @Column(name="DESCRIPTION")
     private String description;
+
+    @OneToMany(
+            targetEntity = Task.class,
+            mappedBy = "taskList",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
     private List<Task> tasks = new ArrayList<>();
 
     public TaskList() {
@@ -23,33 +37,12 @@ public final class TaskList {
         this.description = description;
     }
 
-    @Id
-    @GeneratedValue
-    @Column(name="ID", nullable = false, unique = true)
-        public int getId() {
+    public int getId() {
         return id;
     }
 
-    private void setId(int id) {
-        this.id = id;
-    }
-
-    @Column(name="LISTNAME", nullable = false, unique = true)
     public String getListName() {
         return listName;
-    }
-
-    private void setListName(String listName) {
-        this.listName = listName;
-    }
-
-    @Column(name="DESCRIPTION")
-    public String getDescription() {
-        return description;
-    }
-
-    private void setDescription(String description) {
-        this.description = description;
     }
 
     @Override
@@ -59,17 +52,7 @@ public final class TaskList {
                 '}';
     }
 
-    @OneToMany(
-            targetEntity = Task.class,
-            mappedBy = "taskList",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
     public List<Task> getTasks() {
         return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
     }
 }

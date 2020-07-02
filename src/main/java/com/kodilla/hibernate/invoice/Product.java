@@ -8,9 +8,14 @@ import java.util.List;
 @Entity
 @Table(name="PRODUCT")
 public class Product {
+    @Id
+    @GeneratedValue
+    @NotNull
+    @Column(name = "ID", unique = true)
     private int id;
+
+    @Column(name = "NAME")
     private String name;
-    private List<Item> items = new ArrayList<>();
 
     @OneToMany(
             targetEntity = Item.class,
@@ -18,9 +23,7 @@ public class Product {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    public List<Item> getItems() {
-        return items;
-    }
+    private List<Item> items = new ArrayList<>();
 
     public Product() {
 
@@ -30,29 +33,12 @@ public class Product {
         this.name = name;
     }
 
-    @Column(name = "NAME")
-    public String getName() {
-        return name;
-    }
-
-    @Id
-    @GeneratedValue
-    @NotNull
-    @Column(name = "ID", unique = true)
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
     }
 
     @Override
